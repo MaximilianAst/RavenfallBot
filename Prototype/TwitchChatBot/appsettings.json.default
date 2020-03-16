@@ -1,0 +1,16 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  },
+  "TwitchUser": {
+    "ClientId": "not needed",
+    "Secret": "not needed",
+    "Username" : "...",
+    "UserToken" : "...",
+    "RefreshToken" : "..."
+  }
+}
