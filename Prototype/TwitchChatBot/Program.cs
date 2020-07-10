@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +16,10 @@ namespace TwitchChatBot
   {
     static void Main(string[] args)
     {
-      var cfg = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+      var cfg = new ConfigurationBuilder()
+        .SetBasePath(GetExePath())
+        .AddJsonFile("appsettings.json")
+        .Build();
       var twitchUserSettings = cfg.GetSection(nameof(TwitchUser)).Get<TwitchUser>();
       var botSettings = cfg.GetSection(nameof(BotSettings)).Get<BotSettings>();
 
@@ -22,6 +27,12 @@ namespace TwitchChatBot
       var bot = new Bot(twitchUserSettings, botSettings);
       bot.ConnectAndStart();
       Console.ReadLine();
+    }
+
+    private static string GetExePath()
+    {
+      using var currentProcess = Process.GetCurrentProcess();
+      return Path.GetDirectoryName(currentProcess.MainModule?.FileName);
     }
   }
 
