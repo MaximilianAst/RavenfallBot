@@ -1,0 +1,39 @@
+name: .NET Core
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Publish Prototype
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Install dependencies
+      run: dotnet restore Prototype/TwitchBot.sln
+    - name: Build
+      run: dotnet build --configuration Release --no-restore Prototype/TwitchBot.sln
+#    - name: Test
+#      run: dotnet test --no-restore --verbosity normal
+    - name: Publish Linux-x64
+      run: dotnet publish Prototype/TwitchBot.sln -c Release -o "Release/Prototype/linux-x64" -r linux-x64 -p:PublishTrimmed=true -p:PublishSingleFile=true --self-contained
+    - name: Publish Windows-x64
+      run: dotnet publish Prototype/TwitchBot.sln -c Release -o "Release/Prototype/win-x64" -r win-x64 -p:PublishTrimmed=true -p:PublishSingleFile=true --self-contained
+    - name: Upload linux-x64 artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: RavenfallBot_linux-x64
+        path: Release/Prototype/linux-x64/
+    - name: Upload win-x64 artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: RavenfallBot_win-x64
+        path: Release/Prototype/win-x64/
