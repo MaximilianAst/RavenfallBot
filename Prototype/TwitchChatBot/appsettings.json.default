@@ -7,10 +7,12 @@
     }
   },
   "TwitchUser": {
-    "ClientId": "not needed",
-    "Secret": "not needed",
-    "Username" : "...",
-    "UserToken" : "...",
-    "RefreshToken" : "..."
+    "Username": "...",
+    "UserToken": "...",
+    "RefreshToken": "..."
+  },
+  "BotSettings": {
+    "Training": "Crafting",
+    "Channel": "mrbalrog"
   }
 }
