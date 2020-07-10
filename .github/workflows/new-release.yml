@@ -2,6 +2,7 @@ name: .NET Core
 
 on:
   release:
+    types: [published]
 
 jobs:
   build:
