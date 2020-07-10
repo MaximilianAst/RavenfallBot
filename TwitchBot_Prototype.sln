@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchChatBot", "TwitchChatBot\TwitchChatBot.csproj", "{12C6735C-EB17-4252-B2F2-FD45BF794194}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchChatBot", "Prototype\TwitchChatBot\TwitchChatBot.csproj", "{12C6735C-EB17-4252-B2F2-FD45BF794194}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

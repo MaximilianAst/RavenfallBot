@@ -18,15 +18,15 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Install dependencies
-      run: dotnet restore Prototype/TwitchBot.sln
+      run: dotnet restore TwitchBot_Prototype.sln
     - name: Build
-      run: dotnet build --configuration Release --no-restore Prototype/TwitchBot.sln
+      run: dotnet build --configuration Release --no-restore TwitchBot_Prototype.sln
 #    - name: Test
 #      run: dotnet test --no-restore --verbosity normal
     - name: Publish Linux-x64
-      run: dotnet publish Prototype/TwitchBot.sln -c Release -o "Release/Prototype/linux-x64" -r linux-x64 -p:PublishTrimmed=true -p:PublishSingleFile=true --self-contained
+      run: dotnet publish TwitchBot_Prototype.sln -c Release -o "Release/Prototype/linux-x64" -r linux-x64 -p:PublishTrimmed=true -p:PublishSingleFile=true --self-contained
     - name: Publish Windows-x64
-      run: dotnet publish Prototype/TwitchBot.sln -c Release -o "Release/Prototype/win-x64" -r win-x64 -p:PublishTrimmed=true -p:PublishSingleFile=true --self-contained
+      run: dotnet publish TwitchBot_Prototype.sln -c Release -o "Release/Prototype/win-x64" -r win-x64 -p:PublishTrimmed=true -p:PublishSingleFile=true --self-contained
     - name: Upload linux-x64 artifacts
       uses: actions/upload-artifact@v2
       with:
