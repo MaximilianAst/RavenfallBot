@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Publish Prototype
+    name: Build the Prototype
     runs-on: ubuntu-latest
 
     steps:
