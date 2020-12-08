@@ -85,23 +85,28 @@ namespace TwitchChatBot
 
     private async void Client_OnMessageReceived(object sender, OnMessageReceivedArgs e)
     {
+      if(e?.ChatMessage == null)
+      {
+        return;
+      }
+
       if (!(e.ChatMessage.IsBroadcaster || e.ChatMessage.IsModerator))
       {
-        if (e?.ChatMessage?.Username?.Equals(_twitchUserSettings.Username, StringComparison.InvariantCultureIgnoreCase) ?? false)
+        if (e.ChatMessage.Username?.Equals(_twitchUserSettings.Username, StringComparison.InvariantCultureIgnoreCase) ?? false)
         {
-          Console.WriteLine("ME: " + e?.ChatMessage?.Message);
+          Console.WriteLine("ME: " + e.ChatMessage.Message);
         }
-        
+
         return;
       }
 
       try // DUNGEON
       {
-        var dungeonMatch = Regex.Match(e?.ChatMessage?.Message ?? string.Empty, DUNGEON_PATTERN, REGEX_OPTIONS);
+        var dungeonMatch = Regex.Match(e.ChatMessage.Message ?? string.Empty, DUNGEON_PATTERN, REGEX_OPTIONS);
         if (dungeonMatch.Success && DateTime.UtcNow >= _dungeonTimeout)
         {
           _dungeonTimeout = DateTime.UtcNow.AddMinutes(3);
-          Console.WriteLine("DUNGEON: " + e?.ChatMessage?.Message);
+          Console.WriteLine("DUNGEON: " + e.ChatMessage.Message);
           _client.SendMessage(e.ChatMessage.Channel, "!dungeon");
           return;
         }
@@ -113,11 +118,11 @@ namespace TwitchChatBot
 
       try // RAID
       {
-        var raidMatch = Regex.Match(e?.ChatMessage?.Message ?? string.Empty, RAID_PATTERN, REGEX_OPTIONS);
+        var raidMatch = Regex.Match(e.ChatMessage.Message ?? string.Empty, RAID_PATTERN, REGEX_OPTIONS);
         if (raidMatch.Success && DateTime.UtcNow >= _raidTimeout)
         {
           _raidTimeout = DateTime.UtcNow.AddMinutes(2);
-          Console.WriteLine("RAID: " + e?.ChatMessage?.Message);
+          Console.WriteLine("RAID: " + e.ChatMessage.Message);
           _client.SendMessage(e.ChatMessage.Channel, "!raid");
           return;
         }
@@ -129,10 +134,10 @@ namespace TwitchChatBot
 
       try // DISCONNECTED
       {
-        var dcMatch = Regex.Match(e?.ChatMessage?.Message ?? string.Empty, string.Concat(_twitchUserSettings.Username, DISCONNECT_PATTERN), REGEX_OPTIONS);
+        var dcMatch = Regex.Match(e.ChatMessage.Message ?? string.Empty, string.Concat(_twitchUserSettings.Username, DISCONNECT_PATTERN), REGEX_OPTIONS);
         if (dcMatch.Success && DateTime.UtcNow >= _raidTimeout)
         {
-          Console.WriteLine("DC: " + e?.ChatMessage?.Message);
+          Console.WriteLine("DC: " + e.ChatMessage.Message);
 
           await Task.Delay(2000);
           _client.SendMessage(e.ChatMessage.Channel, "!join");
@@ -148,7 +153,7 @@ namespace TwitchChatBot
 
       try // MyMessages
       {
-        if (e?.ChatMessage?.Message?.Contains(_twitchUserSettings.Username, StringComparison.InvariantCultureIgnoreCase) ?? false)
+        if (e.ChatMessage.Message?.Contains(_twitchUserSettings.Username, StringComparison.InvariantCultureIgnoreCase) ?? false)
         {
           Console.WriteLine("MSG: " + e?.ChatMessage?.Message);
         }
